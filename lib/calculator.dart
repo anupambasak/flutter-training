@@ -13,7 +13,6 @@ class Calculator extends StatefulWidget {
 }
 
 class _CalculatorState extends State<Calculator> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +27,10 @@ class _CalculatorState extends State<Calculator> {
               child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: GetBuilder<MyController>(
+                    dispose: (controller){
+                      print("dispose");
+                      // MyController.to.devName.value = "";
+                    },
                     builder: (s) => TextFormField(
                       initialValue: MyController.to.counter,
                       onChanged: (ss) {

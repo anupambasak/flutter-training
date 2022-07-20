@@ -12,9 +12,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final TextEditingController _editingController = TextEditingController();
-  String? name;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,26 +100,32 @@ class _HomePageState extends State<HomePage> {
                   ))
             ],
           ),
-          Padding(padding: const EdgeInsets.all(8.0), child: Text(name ?? "")),
+          Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Obx(() => Text(MyController.to.devName.string))),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: _editingController,
-              decoration: const InputDecoration(
-                  fillColor: Colors.white,
-                  filled: true,
-                  contentPadding: EdgeInsets.all(12.0),
-                  labelText: "Enter developer Name"),
+            child: GetBuilder<MyController>(
+              builder: (s) => TextFormField(
+                // initialValue: s.devName,
+                onChanged: (ss) {
+                  MyController.to.devName.value = ss;
+                },
+                decoration: const InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    contentPadding: EdgeInsets.all(12.0),
+                    labelText: "Enter developer Name"),
+              ),
             ),
           ),
-          ElevatedButton(
-              onPressed: () => {
-                    setState(() {
-                      name = _editingController.text;
-                      // print(_editingController.text);
-                    })
-                  },
-              child: const Text("Update developer Name"))
+          // ElevatedButton(
+          //     onPressed: () => {
+          //           setState(() {
+          //             // name = _editingController.text;
+          //           })
+          //         },
+          //     child: const Text("Update developer Name"))
         ],
       ),
     );

@@ -4,18 +4,13 @@ import 'package:fluttertest/mycontroller.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.lightBlue,
       appBar: AppBar(
           backgroundColor: Colors.blueAccent,
           title: const Text("CRIS Mobile App")),
@@ -102,15 +97,12 @@ class _HomePageState extends State<HomePage> {
           ),
           Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Obx(() => Text(MyController.to.devName.string))),
+              child: Obx(() => Text(MyController.to.devName.value))),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: GetBuilder<MyController>(
               builder: (s) => TextFormField(
-                // initialValue: s.devName,
-                onChanged: (ss) {
-                  MyController.to.devName.value = ss;
-                },
+                controller: s.devNameCtrl.value,
                 decoration: const InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
@@ -119,13 +111,8 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          // ElevatedButton(
-          //     onPressed: () => {
-          //           setState(() {
-          //             // name = _editingController.text;
-          //           })
-          //         },
-          //     child: const Text("Update developer Name"))
+          ElevatedButton(
+              onPressed: () => {}, child: const Text("Update developer Name"))
         ],
       ),
     );

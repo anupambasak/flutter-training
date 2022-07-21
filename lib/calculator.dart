@@ -1,22 +1,19 @@
-// ignore_for_file: avoid_unnecessary_containers, avoid_print
+// ignore_for_file: avoid_print, avoid_unnecessary_containers
+
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:fluttertest/mycontroller.dart';
 import 'package:get/get.dart';
 
-class Calculator extends StatefulWidget {
+class Calculator extends StatelessWidget {
   const Calculator({Key? key}) : super(key: key);
 
   @override
-  State<Calculator> createState() => _CalculatorState();
-}
-
-class _CalculatorState extends State<Calculator> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // backgroundColor: Colors.blue,
+        // backgroundColor: Colors.lightBlue,
         appBar: AppBar(
             backgroundColor: Colors.blueAccent,
             title: const Text("Calculator")),
@@ -27,14 +24,16 @@ class _CalculatorState extends State<Calculator> {
               child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: GetBuilder<MyController>(
-                    dispose: (controller){
-                      print("dispose");
-                      // MyController.to.devName.value = "";
+                    dispose: (controller) {
+                      log("dispose");
+                      Future.delayed(const Duration(seconds: 0), () {
+                        MyController.to.devNameCtrl.value.text = "";
+                      });
                     },
                     builder: (s) => TextFormField(
-                      initialValue: MyController.to.counter,
+                      initialValue: MyController.to.counter.value,
                       onChanged: (ss) {
-                        MyController.to.counter = ss;
+                        MyController.to.counter.value = ss;
                       },
                     ),
                   )),
@@ -55,7 +54,11 @@ class _CalculatorState extends State<Calculator> {
                 children: [
                   gridArea('7').containing(Container(
                     child: ElevatedButton(
-                        onPressed: () => {print(7)}, child: const Text("7")),
+                        onPressed: () {
+                          print(7);
+                          // MyController.to.devNameCtrl.value.text = "";
+                        },
+                        child: const Text("7")),
                   )),
                   gridArea('8').containing(Container(
                     child: ElevatedButton(

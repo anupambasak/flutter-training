@@ -1,14 +1,24 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertest/calculator.dart';
+import 'package:fluttertest/loginform.dart';
 import 'package:fluttertest/mycontroller.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
+
+  final TextEditingController devNameCtrl =
+      TextEditingController(text: MyController.to.devName.value);
 
   @override
   Widget build(BuildContext context) {
+    log("inside home build method");
+    devNameCtrl.addListener(() {
+      MyController.to.devName.value = devNameCtrl.value.text;
+    });
     return Scaffold(
       backgroundColor: Colors.lightBlue,
       appBar: AppBar(
@@ -87,12 +97,15 @@ class HomePage extends StatelessWidget {
                       child: Text("To Calculator"),
                     )),
               ),
-              Container(
-                  color: Colors.teal[200],
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text("hello"),
-                  ))
+              GestureDetector(
+                onTap: () => {Get.to(() => LoginForm())},
+                child: Container(
+                    color: Colors.teal[200],
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text("Login From"),
+                    )),
+              )
             ],
           ),
           Padding(
@@ -102,7 +115,8 @@ class HomePage extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: GetBuilder<MyController>(
               builder: (s) => TextFormField(
-                controller: s.devNameCtrl.value,
+                // initialValue: s.devName.value,
+                controller: devNameCtrl,
                 decoration: const InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
